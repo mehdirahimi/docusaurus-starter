@@ -5,41 +5,32 @@ sidebar_position: 2
 # Overloading Vararg Methods
 
 You can overload a method that takes a variable-length argument.
+Two ways that a varargs method can be overloaded:
+- First, the types of its vararg parameter can differ.
+- The second way is to add one or more normal parameters.
 
-Add **Markdown or React** files to `src/pages` to create a **standalone page**:
+<hr />
 
-- `src/pages/index.js` → `localhost:3000/`
-- `src/pages/foo.md` → `localhost:3000/foo`
-- `src/pages/foo/bar.js` → `localhost:3000/foo/bar`
+**NOTE:** A varargs method can also be overloaded by a non-varargs method. For example, `vaTest(int x)` is a
+valid overload of `vaTest(int... v)`. This version is invoked only when one `int` argument
+is present. When two or more `int` arguments are passed, the varargs version `vaTest(int... v)` is used.
 
-## Create your first React Page
+# Varargs and Ambiguity
 
-Create a file at `src/pages/my-react-page.js`:
+First Example:
 
-```jsx title="src/pages/my-react-page.js"
-import React from 'react';
-import Layout from '@theme/Layout';
+- `static void vaTest(int... v) { // ...`
+- `static void vaTest(boolean... v) { // ...`
+- Call to `vaTest(); // Error: Ambiguous!`
 
-export default function MyReactPage() {
-  return (
-    <Layout>
-      <h1>My React page</h1>
-      <p>This is a React page</p>
-    </Layout>
-  );
-}
-```
+<hr />
 
-A new page is now available at [http://localhost:3000/my-react-page](http://localhost:3000/my-react-page).
+Second Example:
 
-## Create your first Markdown Page
+- `static void vaTest(int... v) { // ...`
+- `static void vaTest(int n, int... v) { // ...`
+- Call to `vaTest(1); // Error: Ambiguous!`
 
-Create a file at `src/pages/my-markdown-page.md`:
+<hr />
 
-```mdx title="src/pages/my-markdown-page.md"
-# My Markdown page
-
-This is a Markdown page
-```
-
-A new page is now available at [http://localhost:3000/my-markdown-page](http://localhost:3000/my-markdown-page).
+**Solution:** Forego overloading and simply use two different method names.
