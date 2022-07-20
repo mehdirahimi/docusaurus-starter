@@ -18,7 +18,8 @@ sidebar_position: 1
 ### A Superclass Variable Can Reference a Subclass Object
 
 A reference variable of a superclass can be assigned a reference to any subclass derived from
-that superclass: `SuperClass sc = new SubClass1();`
+that superclass:
+- `SuperClass sc = new SubClass1();`
 
 ## Using super
 
