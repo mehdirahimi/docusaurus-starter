@@ -23,55 +23,44 @@ that superclass:
 
 ## Using super
 
+`super` has two general forms:
+- Calls the superclass’ constructor.
+- Access a member of the superclass that has been hidden by a member of a subclass.
 
 ### Using super to Call Superclass Constructors
 
+- When a subclass calls `super()`, it is calling the constructor of its immediate superclass.
+- `super()` must always be the first statement executed inside a subclass’ constructor.
+- We are able to pass **SubClass** object to the **SuperClass** constructor.
+
 ### A Second Use for super
 
+- Using super to overcome **name hiding** (acts somewhat like `this`).
 
+## Creating a Multilevel Hierarchy
+## When Constructors Are Executed
 
+- In a class hierarchy, constructors complete their execution in order of derivation, from superclass to subclass.
 
+## Method Overriding
 
+- When a method in a subclass has the **same name** and **type signature** as a method in its superclass.
+- You cannot override a method and reduce visibility.
 
+[//]: # (- You cannot override a method and change return type.)
 
-
-
-
-
-
-
-
-
-
-## Overloading Vararg Methods
-
-You can overload a method that takes a variable-length argument.
-Two ways that a varargs method can be overloaded:
-- First, the types of its vararg parameter can differ.
-- The second way is to add one or more normal parameters.
-
-<hr />
-
-**NOTE:** A varargs method can also be overloaded by a non-varargs method. For example, `vaTest(int x)` is a
-valid overload of `vaTest(int... v)`. This version is invoked only when one `int` argument
-is present. When two or more `int` arguments are passed, the varargs version `vaTest(int... v)` is used.
-
-## Varargs and Ambiguity
-
-First Example:
-
-- `static void vaTest(int... v) { // ...`
-- `static void vaTest(boolean... v) { // ...`
-- Call to `vaTest(); // Error: Ambiguous!`
-
-<hr />
-
-Second Example:
-
-- `static void vaTest(int... v) { // ...`
-- `static void vaTest(int n, int... v) { // ...`
-- Call to `vaTest(1); // Error: Ambiguous!`
-
-<hr />
-
-**Solution:** Forego overloading and simply use two different method names.
+- The overriding method must obey the following rules:
+  - `final` and `static` methods cannot be overridden.
+  - The overriding method must have same argument list.
+  - The overriding method must have same return type (or subtype).
+  - The overriding method must not have more restrictive access modifier:
+    - If the overridden method is:
+      - `default`, then the overriding one must be `default`, `protected` or `public`.
+      - `protected`, then the overriding one must be `protected` or `public`.
+      - `public`, then the overriding one must be only `public`.
+  - The overriding method must not throw new or broader **checked** exceptions.
+    - The overriding method may throw fewer or narrower checked exceptions, or **any** unchecked exceptions.
+  - Use the `super` keyword to invoke the overridden method from a subclass.
+    - It’s very common that a subclass extends a superclass’ behavior rather than re-implementing the behavior from scratch.
+  - Constructors cannot be overridden.
+  - 
